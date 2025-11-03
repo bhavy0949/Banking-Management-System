@@ -11,8 +11,6 @@ int changePassword(int connectionFD, int accountNumber);
 void logout(int connectionFD, int id);
 
 int writeBytes, readBytes, key, loginOffset;
-// writebuffer - Holds data the server wants to send to the client.
-// readbuffer - Holds data the server receives from the client.
 char readBuffer[4096], writeBuffer[4096];
 
 void customerMenu(int connectionFD){
@@ -25,13 +23,9 @@ void customerMenu(int connectionFD){
     char newPassword[20];
     float amount;
 
-// simple label used as a jump point, typically for error handling or looping (using a goto statement)
 label1:
-    // Clean the Buffer. This function clears the writeBuffer (setting every byte to zero) to ensure no garbage or old data is sent to the client from the previous transaction.
     bzero(writeBuffer, sizeof(writeBuffer));
-    // copies the string "Enter account number: " into the cleared writeBuffer
     strcpy(writeBuffer, "\nEnter account number: ");
-    // connectionFD is the file descriptor (socket) connected to the client.
     writeBytes = write(connectionFD, writeBuffer, sizeof(writeBuffer));
     if(writeBytes == -1)
     {
@@ -48,7 +42,6 @@ label1:
         }
         else
         {
-            // ASCII to Integer
             accountNumber = atoi(readBuffer);
         }
     }

@@ -205,13 +205,9 @@ void cleanupSemaphore(int signum) {
     _exit(signum);
 }
 
-// Engine for ensuring only one person can touch a bank account at a time.
 sem_t *initializeSemaphore(int id) {
-    // Creates a unique name for the semaphore based on the account number
     snprintf(semName, 50, "/sem_%d", id);
-    // better than semget (modern)
-    return sem_open(semName, O_CREAT, 0644, 1);  // A value of 1 means this is a mutex (mutual exclusion) semaphore
-    //returns a pointer to the semaphore object, specifically a pointer of type sem_t*
+    return sem_open(semName, O_CREAT, 0644, 1);  // Initialize to 1
 }
 
 void setupSignalHandlers() {
